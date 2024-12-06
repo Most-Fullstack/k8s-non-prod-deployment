@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v
 
       - name: Log Inputs
         run: |
@@ -25,6 +25,15 @@ jobs:
       - name: Update Deployment YAML
         run: |
           yq eval '.spec.template.spec.containers[0].image = "mostfullstack/rust-demo:${{ github.event.inputs.tag }}"' -i dev/management/deployment.yaml
+
+      - name: Commit Deployment YAML
+        run: |
+          git add dev/management/deployment.yaml
+          git commit -m "Update deployment image to mostfullstack/rust-demo:${{ github.event.inputs.tag }}"
+          git push origin main
+
+
+
 
       # - name: Apply Deployment
         # run: kubectl apply -f dev/management/deployment.yaml
