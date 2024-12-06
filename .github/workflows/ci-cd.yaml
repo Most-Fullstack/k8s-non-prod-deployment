@@ -1,10 +1,16 @@
-name: rust-demo
+name: k8s-non-prod-config
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # Add this trigger to allow API triggering
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
 
 env:
   CARGO_TERM_COLOR: always
@@ -13,9 +19,9 @@ jobs:
   deploy-k8s:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Update Deployment
-      run: yq eval '.spec.template.spec.containers[0].image = "'mostfullstack/rust-demo'"' -i /dev/management/deployment.yaml
-    - name: Apply Deployment
-      run: kubectl apply -f /dev/management/deployment.yaml
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Update Deployment
+        run: yq eval '.spec.template.spec.containers[0].image = "mostfullstack/rust-demo"' -i /dev/management/deployment.yaml
+      - name: Apply Deployment
+        run: kubectl apply -f /dev/management/deployment.yaml
