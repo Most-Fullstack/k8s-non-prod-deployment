@@ -1,0 +1,21 @@
+name: rust-demo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  deploy-k8s:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Update Deployment
+      run: yq eval '.spec.template.spec.containers[0].image = "'mostfullstack/rust-demo'"' -i k8s-non-prod-config/dev/management/deployment.yaml
+    - name: Apply Deployment
+      run: kubectl apply -f k8s-non-prod-config/dev/management/deployment.yaml

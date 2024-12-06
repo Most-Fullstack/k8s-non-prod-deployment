@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  DB_ENDPOINT: management-db-endpoint
+  DB_NAME: management-db-name
+  NAME: ADMIN
+kind: ConfigMap
+metadata:
+  name: management
+---
+apiVersion: v1
+data:
+  .env: |-
+    DB_ENDPOINT=payment-db-endpoint
+    DB_NAME=payment-db-name
+kind: ConfigMap
+metadata:
+  name: payment

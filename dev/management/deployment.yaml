@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: management
+  name: management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: management
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rust-app
+    spec:
+      containers:
+        - image: mostfullstack/rust-demo
+          name: management
+          ports:
+            - containerPort: 8080
+      serviceAccountName: default
+      imagePullSecrets:
+        - name: docker-secret
+status: {}

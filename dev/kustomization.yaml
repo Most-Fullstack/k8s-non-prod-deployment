@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- name: management
+  envs:
+  - management/db.env
+  - management/user.env
+- name: payment
+  files:
+  - .env=payment/db.env
+
+generatorOptions:
+  disableNameSuffixHash: true
