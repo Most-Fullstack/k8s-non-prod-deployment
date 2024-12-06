@@ -11,6 +11,10 @@ on:
         description: 'Environment to deploy to'
         required: true
         default: 'production'
+      tag:
+        description: 'Docker image tag'
+        required: true
+        default: 'latest'
 
 env:
   CARGO_TERM_COLOR: always
@@ -22,6 +26,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Update Deployment
-        run: yq eval '.spec.template.spec.containers[0].image = "mostfullstack/rust-demo"' -i dev/management/deployment.yaml
-      # - name: Apply Deployment
-        # run: kubectl apply -f dev/management/deployment.yaml
+        run: yq eval '.spec.template.spec.containers[0].image = "mostfullstack/rust-demo:${{ github.event.inputs.tag }}"' -i dev/management/deployment.yaml
