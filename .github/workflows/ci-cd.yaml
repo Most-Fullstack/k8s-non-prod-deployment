@@ -5,11 +5,9 @@ on:
     inputs:
       environment:
         description: "Environment to deploy to"
-        required: true
         default: "staging"
       tag:
         description: "Docker image tag"
-        required: true
         default: "latest"
 
 jobs:
