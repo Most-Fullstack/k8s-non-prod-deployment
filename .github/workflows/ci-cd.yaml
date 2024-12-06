@@ -1,4 +1,4 @@
-name: k8s-deploy
+name: ci-cd
 
 on:
   workflow_dispatch: # Add this trigger to allow API triggering
