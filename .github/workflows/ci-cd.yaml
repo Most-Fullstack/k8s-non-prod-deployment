@@ -21,9 +21,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Change to the directory
-        run: cd dev/management
       - name: Update Deployment
-        run: yq eval '.spec.template.spec.containers[0].image = "mostfullstack/rust-demo"' -i deployment.yaml
+        run: yq eval '.spec.template.spec.containers[0].image = "mostfullstack/rust-demo"' -i dev/management/deployment.yaml
       - name: Apply Deployment
-        run: kubectl apply -f deployment.yaml
+        run: kubectl apply -f dev/management/deployment.yaml
