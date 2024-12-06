@@ -28,6 +28,8 @@ jobs:
 
       - name: Commit Deployment YAML
         run: |
+          git config --global user.email "most@hpktechnology.com"
+          git config --global user.name "Most-Fullstack"
           git add dev/management/deployment.yaml
           git commit -m "Update deployment image to mostfullstack/rust-demo:${{ github.event.inputs.tag }}"
           git push origin main
